@@ -16,7 +16,20 @@ app.get('/', (req, res) => {
 });
 
 io.on('connection', (socket) => {
-    console.log('new user connected');
+    console.log('Connected to the server');
+    
+    //send welcome message to that user
+    socket.emit('new message', {
+        text: 'Welcome to the chat app',
+        from: 'Admin'
+    });
+
+    //inform other user of the new user join
+    socket.broadcast.emit('new message', {
+        text: 'A new user has joined the chat app',
+        from: 'Admin'
+    });
+
     socket.on('disconnect', () => {
         console.log('user disconnected');
     });
@@ -24,13 +37,16 @@ io.on('connection', (socket) => {
     //     from: 'Tuan Anh',
     //     content: 'fuck you'
     // });
-    socket.on('create message', (message) => {
-        console.log('New message created', message);
-        io.emit('new message', message);
-    });
-    // socket.on('chat message', (message) => {
-    //     console.log(message);
-    //     io.emit('chat message', message);
+
+    //send a message to all other user
+    // socket.on('create message', (message) => {
+    //     console.log('New message created', message);
+    //     // io.emit('new message', message);
+    //     socket.broadcast.emit('new message', {
+    //         text: message.text,
+    //         from: message.from,
+    //         createAt: new Date()
+    //     });
     // });
 });
 

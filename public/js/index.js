@@ -8,7 +8,7 @@ socket.on('disconnect', function(){
 socket.on('new message', function(message){
     console.log('Message come in', message);
 });
-socket.emit('create message', {
-    from: 'Ronaldo',
-    content: 'fuck cc'
-});
+// socket.emit('create message', {
+//     from: 'Ronaldo',
+//     content: 'fuck cc'
+// });
